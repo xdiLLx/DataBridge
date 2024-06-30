@@ -1,0 +1,69 @@
+unit DataBridge.Controller.Conexao.Factory;
+
+interface
+
+uses
+  DataBridge.Controller.Interfaces,
+  DataBridge.Model.Conexao.Interfaces,
+  Data.DB;
+
+type
+  TControllerConexaoFactory = class(TInterfacedObject,
+    iControllerConexaoFactory)
+  private
+    { Campos privados }
+    function Firebird(Parametros: iConfiguracaoBancoDados) :  TCustomConnection;
+    function MySQL(Parametros: iConfiguracaoBancoDados) :  TCustomConnection;
+    function PostGreSQL(Parametros: iConfiguracaoBancoDados) :  TCustomConnection;
+    function SQLite(Parametros: iConfiguracaoBancoDados) :  TCustomConnection;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iControllerConexaoFactory;
+  end;
+
+implementation
+
+{ TControllerConexaoFactory }
+
+constructor TControllerConexaoFactory.Create;
+begin
+
+end;
+
+destructor TControllerConexaoFactory.Destroy;
+begin
+
+  inherited;
+end;
+
+function TControllerConexaoFactory.Firebird(Parametros: iConfiguracaoBancoDados) : TCustomConnection;
+begin
+
+end;
+
+function TControllerConexaoFactory.MySQL(
+  Parametros: iConfiguracaoBancoDados): iControllerConexaoFactory;
+begin
+
+end;
+
+class function TControllerConexaoFactory.New: iControllerConexaoFactory;
+begin
+  Result := Self.Create;
+end;
+
+function TControllerConexaoFactory.PostGreSQL(
+  Parametros: iConfiguracaoBancoDados): iControllerConexaoFactory;
+begin
+
+end;
+
+function TControllerConexaoFactory.SQLite(
+  Parametros: iConfiguracaoBancoDados): iControllerConexaoFactory;
+begin
+
+end;
+
+end.

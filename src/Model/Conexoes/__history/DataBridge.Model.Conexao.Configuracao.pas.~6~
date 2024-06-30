@@ -1,0 +1,54 @@
+unit DataBridge.Model.Conexao.Configuracao;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces,
+  System.IOUtils,
+  System.SysUtils;
+
+type
+  TConfiguracaoBancoDados = class(TInterfacedObject, iConfiguracaoBancoDados)
+  private
+    { Campos privados }
+    FDriverName: string;
+    FServer: string;
+    FUsuario: string;
+    FSenha: string;
+    FPorta: integer;
+
+    function DriverName(Value: string): iConfiguracaoBancoDados; overload;
+    function Server(Value: string): iConfiguracaoBancoDados; overload;
+    function Usuario(Value: string): iConfiguracaoBancoDados; overload;
+    function Senha(Value: string): iConfiguracaoBancoDados; overload;
+    function Porta(Value: integer): iConfiguracaoBancoDados; overload;
+    function Parametros: iConfiguracaoBancoDados;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iConfiguracaoBancoDados;
+  end;
+
+implementation
+
+{ TConfiguracaoBancoDados }
+
+constructor TConfiguracaoBancoDados.Create;
+begin
+
+end;
+
+destructor TConfiguracaoBancoDados.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TConfiguracaoBancoDados.New: iConfiguracaoBancoDados;
+begin
+  Result := Self.Create;
+end;
+
+
+end.

@@ -1,0 +1,22 @@
+unit DataBridge.Controller.Interfaces;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces,
+  Data.DB;
+
+type
+  iControllerConexaoFactory = interface
+    ['{4174D15D-C045-4E96-B395-FB812380A2D9}']
+    function FireDAC(Parametros: iConfiguracaoBancoDados): TCustomConnection;
+  end;
+
+  iControllerConfiguracaoBancoDados = interface
+    ['{EDCAC616-B376-4981-A865-6514783EA2F8}']
+    function FireDAC: iConfiguracaoBancoDados;
+  end;
+
+implementation
+
+end.

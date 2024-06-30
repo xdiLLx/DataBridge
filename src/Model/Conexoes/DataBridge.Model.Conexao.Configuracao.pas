@@ -1,0 +1,120 @@
+unit DataBridge.Model.Conexao.Configuracao;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces,
+  System.IOUtils,
+  System.SysUtils;
+
+type
+  TConfiguracaoBancoDados = class(TInterfacedObject, iConfiguracaoBancoDados)
+  private
+    { Campos privados }
+    FDriverName: string;
+    FServer: string;
+    FUsuario: string;
+    FSenha: string;
+    FPorta: integer;
+
+    function DriverName(Value: string): iConfiguracaoBancoDados; overload;
+    function Server(Value: string): iConfiguracaoBancoDados; overload;
+    function Usuario(Value: string): iConfiguracaoBancoDados; overload;
+    function Senha(Value: string): iConfiguracaoBancoDados; overload;
+    function Porta(Value: integer): iConfiguracaoBancoDados; overload;
+    function DriverName: string; overload;
+    function Server: string; overload;
+    function Usuario: string; overload;
+    function Senha: string; overload;
+    function Porta: integer; overload;
+    function Parametros: iConfiguracaoBancoDados;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iConfiguracaoBancoDados;
+  end;
+
+implementation
+
+{ TConfiguracaoBancoDados }
+
+constructor TConfiguracaoBancoDados.Create;
+begin
+
+end;
+
+destructor TConfiguracaoBancoDados.Destroy;
+begin
+
+  inherited;
+end;
+
+function TConfiguracaoBancoDados.DriverName: string;
+begin
+   Result:= FDriverName;
+end;
+
+function TConfiguracaoBancoDados.DriverName(Value: string)
+  : iConfiguracaoBancoDados;
+begin
+  Result := Self;
+  FDriverName := Value;
+end;
+
+class function TConfiguracaoBancoDados.New: iConfiguracaoBancoDados;
+begin
+  Result := Self.Create;
+end;
+
+function TConfiguracaoBancoDados.Parametros: iConfiguracaoBancoDados;
+begin
+  Result := Self;
+end;
+
+function TConfiguracaoBancoDados.Porta: integer;
+begin
+  Result := FPorta;
+end;
+
+function TConfiguracaoBancoDados.Porta(Value: integer): iConfiguracaoBancoDados;
+begin
+  Result := Self;
+  FPorta := Value;
+end;
+
+function TConfiguracaoBancoDados.Senha(Value: string): iConfiguracaoBancoDados;
+begin
+  Result := Self;
+  FSenha := Value;
+end;
+
+function TConfiguracaoBancoDados.Server(Value: string): iConfiguracaoBancoDados;
+begin
+  Result := Self;
+  FServer := Value;
+end;
+
+function TConfiguracaoBancoDados.Usuario(Value: string)
+  : iConfiguracaoBancoDados;
+begin
+  Result := Self;
+  FUsuario := Value;
+end;
+
+function TConfiguracaoBancoDados.Senha: string;
+begin
+  Result := FSenha;
+end;
+
+function TConfiguracaoBancoDados.Server: string;
+begin
+  Result := FServer;
+end;
+
+function TConfiguracaoBancoDados.Usuario: string;
+begin
+  Result := FUsuario;
+end;
+
+end.

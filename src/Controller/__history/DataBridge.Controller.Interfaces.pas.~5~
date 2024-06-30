@@ -1,0 +1,19 @@
+unit DataBridge.Controller.Interfaces;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces;
+
+type
+  iControllerConexaoFactory = interface
+    ['{4174D15D-C045-4E96-B395-FB812380A2D9}']
+    function Firebird(Parametros: iConfiguracaoBancoDados) :  iControllerConexaoFactory;
+    function MySQL(Parametros: iConfiguracaoBancoDados) :  iControllerConexaoFactory;
+    function PostGreSQL(Parametros: iConfiguracaoBancoDados) :  iControllerConexaoFactory;
+    function SQLite(Parametros: iConfiguracaoBancoDados) :  iControllerConexaoFactory;
+  end;
+
+implementation
+
+end.

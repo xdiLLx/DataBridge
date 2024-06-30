@@ -1,0 +1,18 @@
+program DataBridge;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  DataBridge.View.Principal in 'src\View\DataBridge.View.Principal.pas' {FormPrincipal},
+  DataBridge.Model.Conexao.Configuracao in 'src\Model\Conexoes\DataBridge.Model.Conexao.Configuracao.pas',
+  DataBridge.Model.Conexao.Firedac in 'src\Model\Conexoes\DataBridge.Model.Conexao.Firedac.pas',
+  DataBridge.Model.Conexao.Interfaces in 'src\Model\Conexoes\DataBridge.Model.Conexao.Interfaces.pas',
+  DataBridge.Model.Conexao.Query.Firedac in 'src\Model\Conexoes\DataBridge.Model.Conexao.Query.Firedac.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.Run;
+end.

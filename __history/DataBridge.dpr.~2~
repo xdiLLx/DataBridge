@@ -1,0 +1,14 @@
+program DataBridge;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  DataBridge.View.Principal in 'src\View\DataBridge.View.Principal.pas' {FormPrincipal};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.Run;
+end.
