@@ -10,7 +10,7 @@ The software enables intuitive mapping and transfer of data between different da
 
 - Facilitates data imports into multiple databases
 - Intuitive interface for mapping and data transfer
-- Supports Firebird, MySQL, SQLite, Oracle, and SQLServer
+- Supports Firebird, MySQL, SQLite and PostgreSQL
 - Developed using Delphi, following OOP and MVC principles
 - Emphasis on clean code for easy maintenance and readability
 
