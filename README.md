@@ -4,7 +4,7 @@
 
 This is a personal project developed in Delphi, aimed at facilitating data imports into various databases. It uses Object-Oriented Programming (OOP) principles and follows the MVC (Model-View-Controller) architecture to ensure clean and maintainable code.
 
-The software enables intuitive mapping and transfer of data between different database systems, including Firebird, MySQL, SQLite, Oracle, and SQLServer. This project represents my effort to create a practical tool for managing data imports efficiently while applying best practices in software development.
+The software enables intuitive mapping and transfer of data between different database systems, including Firebird, MySQL, SQLite, and PostgreSQL. This project represents my effort to create a practical tool for managing data imports efficiently while applying best practices in software development.
 
 ## Key Features
 
