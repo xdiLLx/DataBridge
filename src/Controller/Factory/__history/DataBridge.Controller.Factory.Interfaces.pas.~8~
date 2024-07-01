@@ -1,0 +1,28 @@
+unit DataBridge.Controller.Factory.Interfaces;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces, Data.DB;
+
+type
+
+  iFactoryQuery = interface
+    ['{54395377-D65A-458C-8F1B-764A11A9C070}']
+    function Query(Connection: iConexao): iQuery;
+  end;
+
+type
+  iControllerConexaoFactory = interface
+    ['{4174D15D-C045-4E96-B395-FB812380A2D9}']
+    function FireDAC(Parametros: iConfiguracaoBancoDados): iConexao;
+  end;
+
+  iControllerConfiguracaoBancoDadosFactory = interface
+    ['{CBAA0523-D743-46CE-8BA2-0D3788014B9F}']
+    function Firebird: iConexao;
+  end;
+
+implementation
+
+end.

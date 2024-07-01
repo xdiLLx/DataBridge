@@ -1,0 +1,49 @@
+
+unit DataBridge.Controller.Factory.ConfiguracaoBancoDados;
+
+interface
+
+uses
+  DataBridge.Controller.Factory.Interfaces,
+  DataBridge.Model.Conexao.Interfaces,
+  DataBridge.Model.Conexao.ConfiguracaoFirebird;
+
+type
+TControllerConfiguracaoBancoDados = class(TInterfacedObject, iControllerConfiguracaoBancoDadosFactory)
+private
+    { Campos privados }
+    function Firebird: iConfiguracaoBancoDados;
+
+public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iControllerConfiguracaoBancoDadosFactory;
+end;
+
+implementation
+
+{ TControllerConfiguracaoBancoDados }
+
+constructor TControllerConfiguracaoBancoDados.Create;
+begin
+
+end;
+
+destructor TControllerConfiguracaoBancoDados.Destroy;
+begin
+
+    inherited;
+end;
+
+function TControllerConfiguracaoBancoDados.Firebird: iConfiguracaoBancoDados;
+var
+lConfig: iConfiguracaoBancoDados;
+begin
+  Result := TConfiguracaoBancoDadosFirebird.New.;
+end;
+
+class function TControllerConfiguracaoBancoDados.New: iControllerConfiguracaoBancoDadosFactory;
+begin
+    Result := Self.Create;
+end;
+end.

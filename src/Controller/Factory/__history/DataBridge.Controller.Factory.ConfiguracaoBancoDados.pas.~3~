@@ -1,0 +1,38 @@
+
+unit DataBridge.Controller.Factory.ConfiguracaoBancoDados;
+
+interface
+
+uses
+  DataBridge.Controller.Factory.Interfaces;
+
+type
+TControllerConfiguracaoBancoDados = class(TInterfacedObject, iControllerConfiguracaoBancoDadosFactory)
+private
+    { Campos privados }
+public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iControllerConfiguracaoBancoDadosFactory;
+end;
+
+implementation
+
+{ TControllerConfiguracaoBancoDados }
+
+constructor TControllerConfiguracaoBancoDados.Create;
+begin
+
+end;
+
+destructor TControllerConfiguracaoBancoDados.Destroy;
+begin
+
+    inherited;
+end;
+
+class function TControllerConfiguracaoBancoDados.New: iControllerConfiguracaoBancoDados;
+begin
+    Result := Self.Create;
+end;
+end.

@@ -6,7 +6,11 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Factory.Query,
-  DataBridge.Controller.Factory.Conexao;
+  DataBridge.Controller.Factory.Conexao, DataBridge.Model.Conexao.Configuracao,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.FMXUI.Wait, Data.DB, FireDAC.Comp.Client,
+  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
 
 type
   TFormPrincipal = class(TForm)
@@ -14,8 +18,13 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    FDConnection1: TFDConnection;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,13 +37,28 @@ var
 implementation
 
 uses
-  DataBridge.Model.Conexao.Interfaces, DataBridge.Model.Conexao.Configuracao;
+  DataBridge.Model.Conexao.Interfaces;
 
 {$R *.fmx}
 
 procedure TFormPrincipal.Button1Click(Sender: TObject);
+var
+lConfigBanco: iConfiguracaoBancoDados;
 begin
-  ShowMessage('');
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName('PG')
+              .Database('TesteCon')
+              .Usuario('postgres')
+              .Senha('1234')
+              .Porta(5432)
+              .Hostname('localhost');
+
+   SHOWMESSAGE(TControllerFactoryQuery
+              .New
+              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
+              .SQL('SELECT "Nome" FROM public."Usuario" WHERE "ID"=1')
+              .DataSet
+              .FieldByName('Nome').AsString);
 end;
 
 procedure TFormPrincipal.Button2Click(Sender: TObject);
@@ -43,7 +67,7 @@ lConfigBanco: iConfiguracaoBancoDados;
 begin
   lConfigBanco := TConfiguracaoBancoDados.New;
   lConfigBanco.DriverName('FB')
-              .Server('E:\Sparta\Dados\Galvao2.0.FDB')
+              .Database('E:\Sparta\Dados\Galvao2.0.FDB')
               .Usuario('SYSDBA')
               .Senha('masterkey');
 
@@ -53,6 +77,43 @@ begin
               .SQL('SELECT CLI_NOME FROM CLIENTE WHERE CLI_CODIGO=2')
               .DataSet
               .FieldByName('CLI_NOME').AsString);
+end;
+
+procedure TFormPrincipal.Button3Click(Sender: TObject);
+var
+lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName('MySQL')
+              .Database('testemysql')
+              .Usuario('root')
+              .Senha('1234')
+              .Hostname('localhost');
+
+   SHOWMESSAGE(TControllerFactoryQuery
+              .New
+              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
+              .SQL('SELECT NOME FROM USUARIOS WHERE ID=1')
+              .DataSet
+              .FieldByName('NOME').AsString);
+end;
+
+procedure TFormPrincipal.Button4Click(Sender: TObject);
+var
+lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName('SQLite')
+              .Database('C:\Users\GabrielDill\Downloads\Tarefas.db')
+              .Usuario('')
+              .Senha('');
+
+   SHOWMESSAGE(TControllerFactoryQuery
+              .New
+              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
+              .SQL('SELECT NOME FROM USUARIOS WHERE ID=1')
+              .DataSet
+              .FieldByName('NOME').AsString);
 end;
 
 end.

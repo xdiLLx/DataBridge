@@ -36,6 +36,7 @@ object FormPrincipal: TFormPrincipal
     Size.PlatformDefault = False
     TabOrder = 1
     Text = 'Testar MySQL'
+    OnClick = Button3Click
   end
   object Button4: TButton
     Position.X = 32.000000000000000000
@@ -44,6 +45,23 @@ object FormPrincipal: TFormPrincipal
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    Text = 'Testar MySQL'
+    Text = 'Testar SQLIte'
+    OnClick = Button4Click
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=testemysql'
+      'User_Name=root'
+      'Password=1234'
+      'Server=localhost'
+      'DriverID=MySQL')
+    LoginPrompt = False
+    Left = 408
+    Top = 96
+  end
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    VendorLib = 'E:\Meus Projetos\DataBridge\Win32\Debug\bin\libmysql.dll'
+    Left = 400
+    Top = 168
   end
 end

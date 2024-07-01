@@ -58,16 +58,29 @@ uses
 
 procedure TModelConexaoFiredac.AplicarParametros
   (Parametros: iConfiguracaoBancoDados);
+
 begin
   FConexao.DriverName := Parametros.DriverName;
-  FConexao.Params.Database := Parametros.Server;
+  FConexao.Params.Database := Parametros.Database;
   FConexao.Params.UserName := Parametros.Usuario;
   FConexao.Params.Password := Parametros.Senha;
   FConexao.Params.Values['Port'] := IntToStr(Parametros.Porta);
+  FConexao.Params.Values['Server'] := Parametros.Hostname;
+  FConexao.Params.Values['UseSSL'] := 'false';
+
+
+  if Parametros.DriverName = 'FB' then
+    FFirebirdDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+      '\bin\fbclient.dll';
+  if Parametros.DriverName = 'PG' then
+    FPostgreSQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+      '\bin\libpq.dll';
+  if Parametros.DriverName = 'MySQL' then
+    FMySQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+      '\bin\libmysql.dll';
 end;
 
-function TModelConexaoFiredac.Connection()
-  : TCustomConnection;
+function TModelConexaoFiredac.Connection(): TCustomConnection;
 begin
   Result := FConexao;
 end;
@@ -95,7 +108,8 @@ begin
   inherited;
 end;
 
-class function TModelConexaoFiredac.New(Param: iConfiguracaoBancoDados): iConexao;
+class function TModelConexaoFiredac.New(Param: iConfiguracaoBancoDados)
+  : iConexao;
 begin
   Result := Self.Create(Param);
 end;

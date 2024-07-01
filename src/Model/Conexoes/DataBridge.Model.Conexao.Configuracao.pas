@@ -16,15 +16,18 @@ type
     FUsuario: string;
     FSenha: string;
     FPorta: integer;
+    FHostname: string;
 
     function DriverName(Value: string): iConfiguracaoBancoDados; overload;
-    function Server(Value: string): iConfiguracaoBancoDados; overload;
+    function Database(Value: string): iConfiguracaoBancoDados; overload;
     function Usuario(Value: string): iConfiguracaoBancoDados; overload;
     function Senha(Value: string): iConfiguracaoBancoDados; overload;
+    function Hostname(Value: string): iConfiguracaoBancoDados; overload;
     function Porta(Value: integer): iConfiguracaoBancoDados; overload;
     function DriverName: string; overload;
-    function Server: string; overload;
+    function Database: string; overload;
     function Usuario: string; overload;
+    function Hostname: string; overload;
     function Senha: string; overload;
     function Porta: integer; overload;
     function Parametros: iConfiguracaoBancoDados;
@@ -52,24 +55,36 @@ end;
 
 function TConfiguracaoBancoDados.DriverName: string;
 begin
-   Result:= FDriverName;
+  Result := FDriverName;
+end;
+
+function TConfiguracaoBancoDados.Hostname: string;
+begin
+  Result := FHostname;
+end;
+
+function TConfiguracaoBancoDados.Hostname(Value: string)
+  : iConfiguracaoBancoDados;
+begin
+  FHostname := Value;
+  Result := SELF;
 end;
 
 function TConfiguracaoBancoDados.DriverName(Value: string)
   : iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
   FDriverName := Value;
 end;
 
 class function TConfiguracaoBancoDados.New: iConfiguracaoBancoDados;
 begin
-  Result := Self.Create;
+  Result := SELF.Create;
 end;
 
 function TConfiguracaoBancoDados.Parametros: iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
 end;
 
 function TConfiguracaoBancoDados.Porta: integer;
@@ -79,26 +94,27 @@ end;
 
 function TConfiguracaoBancoDados.Porta(Value: integer): iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
   FPorta := Value;
 end;
 
 function TConfiguracaoBancoDados.Senha(Value: string): iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
   FSenha := Value;
 end;
 
-function TConfiguracaoBancoDados.Server(Value: string): iConfiguracaoBancoDados;
+function TConfiguracaoBancoDados.Database(Value: string)
+  : iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
   FServer := Value;
 end;
 
 function TConfiguracaoBancoDados.Usuario(Value: string)
   : iConfiguracaoBancoDados;
 begin
-  Result := Self;
+  Result := SELF;
   FUsuario := Value;
 end;
 
@@ -107,7 +123,7 @@ begin
   Result := FSenha;
 end;
 
-function TConfiguracaoBancoDados.Server: string;
+function TConfiguracaoBancoDados.Database: string;
 begin
   Result := FServer;
 end;
