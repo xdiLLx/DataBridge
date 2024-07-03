@@ -67,17 +67,18 @@ begin
   FConexao.Params.Values['Port'] := IntToStr(Parametros.Porta);
   FConexao.Params.Values['Server'] := Parametros.Hostname;
   FConexao.Params.Values['UseSSL'] := 'false';
-
+  FConexao.Params.Values['SSL_verify'] := 'false';
 
   if Parametros.DriverName = 'FB' then
     FFirebirdDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\fbclient.dll';
+      '\bin\fbclient32.dll';
   if Parametros.DriverName = 'PG' then
     FPostgreSQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\libpq.dll';
+      '\bin\libpq32.dll';
   if Parametros.DriverName = 'MySQL' then
     FMySQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\libmysql.dll';
+      '\bin\LIBMYSQL32.dll';
+
 end;
 
 function TModelConexaoFiredac.Connection(): TCustomConnection;

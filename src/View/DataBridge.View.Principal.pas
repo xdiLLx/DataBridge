@@ -6,11 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Factory.Query,
-  DataBridge.Controller.Factory.Conexao, DataBridge.Model.Conexao.Configuracao,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
-  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
-  FireDAC.Phys, FireDAC.FMXUI.Wait, Data.DB, FireDAC.Comp.Client,
-  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
+  DataBridge.Controller.Factory.Conexao, DataBridge.Model.Conexao.Configuracao;
 
 type
   TFormPrincipal = class(TForm)
@@ -18,8 +14,6 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
-    FDConnection1: TFDConnection;
-    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
 
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);

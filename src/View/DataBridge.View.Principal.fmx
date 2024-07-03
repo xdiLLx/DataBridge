@@ -48,20 +48,4 @@ object FormPrincipal: TFormPrincipal
     Text = 'Testar SQLIte'
     OnClick = Button4Click
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'Database=testemysql'
-      'User_Name=root'
-      'Password=1234'
-      'Server=localhost'
-      'DriverID=MySQL')
-    LoginPrompt = False
-    Left = 408
-    Top = 96
-  end
-  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
-    VendorLib = 'E:\Meus Projetos\DataBridge\Win32\Debug\bin\libmysql.dll'
-    Left = 400
-    Top = 168
-  end
 end
