@@ -1,7 +1,0 @@
-unit DataBridge.Controller.Interfaces;
-
-interface
-
-implementation
-
-end.

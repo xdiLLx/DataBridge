@@ -60,7 +60,13 @@ procedure TModelConexaoFiredac.AplicarParametros
   (Parametros: iConfiguracaoBancoDados);
 
 begin
-  FConexao.DriverName := Parametros.DriverName;
+  case Parametros.DriverName of
+    SQLite: FConexao.DriverName := 'SQLite';
+    MySQL: FConexao.DriverName := 'MySQL';
+    Firebird: FConexao.DriverName := 'FB';
+    PostgreSQL: FConexao.DriverName := 'PG';
+  end;
+
   FConexao.Params.Database := Parametros.Database;
   FConexao.Params.UserName := Parametros.Usuario;
   FConexao.Params.Password := Parametros.Senha;
@@ -69,15 +75,12 @@ begin
   FConexao.Params.Values['UseSSL'] := 'false';
   FConexao.Params.Values['SSL_verify'] := 'false';
 
-  if Parametros.DriverName = 'FB' then
-    FFirebirdDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\fbclient32.dll';
-  if Parametros.DriverName = 'PG' then
-    FPostgreSQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\libpq32.dll';
-  if Parametros.DriverName = 'MySQL' then
-    FMySQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
-      '\bin\LIBMYSQL32.dll';
+  FFirebirdDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+    '\bin\fbclient32.dll';
+  FPostgreSQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+    '\bin\libpq32.dll';
+  FMySQLDriverLink.VendorLib := ExtractFileDir(ParamStr(0)) +
+    '\bin\LIBMYSQL32.dll';
 
 end;
 

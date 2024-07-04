@@ -1,0 +1,16 @@
+unit DataBridge.Controller.Interfaces;
+
+interface
+
+uses
+  DataBridge.Model.Conexao.Interfaces,
+  Data.DB;
+
+ type
+ iControllerDatabase = interface
+   ['{95DE3FF7-46F2-465B-9651-031E2585AE85}']
+   function Query: iQuery;
+ end;
+
+implementation
+end.

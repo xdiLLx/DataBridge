@@ -11,20 +11,20 @@ type
   TConfiguracaoBancoDados = class(TInterfacedObject, iConfiguracaoBancoDados)
   private
     { Campos privados }
-    FDriverName: string;
+    FDriverName: TTipoConexao;
     FServer: string;
     FUsuario: string;
     FSenha: string;
     FPorta: integer;
     FHostname: string;
 
-    function DriverName(Value: string): iConfiguracaoBancoDados; overload;
+    function DriverName(Value: TTipoConexao): iConfiguracaoBancoDados; overload;
     function Database(Value: string): iConfiguracaoBancoDados; overload;
     function Usuario(Value: string): iConfiguracaoBancoDados; overload;
     function Senha(Value: string): iConfiguracaoBancoDados; overload;
     function Hostname(Value: string): iConfiguracaoBancoDados; overload;
     function Porta(Value: integer): iConfiguracaoBancoDados; overload;
-    function DriverName: string; overload;
+    function DriverName: TTipoConexao; overload;
     function Database: string; overload;
     function Usuario: string; overload;
     function Hostname: string; overload;
@@ -53,7 +53,7 @@ begin
   inherited;
 end;
 
-function TConfiguracaoBancoDados.DriverName: string;
+function TConfiguracaoBancoDados.DriverName: TTipoConexao;
 begin
   Result := FDriverName;
 end;
@@ -70,7 +70,7 @@ begin
   Result := SELF;
 end;
 
-function TConfiguracaoBancoDados.DriverName(Value: string)
+function TConfiguracaoBancoDados.DriverName(Value: TTipoConexao)
   : iConfiguracaoBancoDados;
 begin
   Result := SELF;

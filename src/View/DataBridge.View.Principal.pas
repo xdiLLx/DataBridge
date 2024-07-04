@@ -3,10 +3,11 @@ unit DataBridge.View.Principal;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Factory.Query,
-  DataBridge.Controller.Factory.Conexao, DataBridge.Model.Conexao.Configuracao;
+  FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Interfaces,
+  DataBridge.Model.Conexao.Configuracao, DataBridge.Controller.Database;
 
 type
   TFormPrincipal = class(TForm)
@@ -21,6 +22,7 @@ type
     procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
+    FBancoDeDados: iControllerDatabase;
   public
     { Public declarations }
   end;
@@ -37,77 +39,55 @@ uses
 
 procedure TFormPrincipal.Button1Click(Sender: TObject);
 var
-lConfigBanco: iConfiguracaoBancoDados;
+  lConfigBanco: iConfiguracaoBancoDados;
 begin
   lConfigBanco := TConfiguracaoBancoDados.New;
-  lConfigBanco.DriverName('PG')
-              .Database('TesteCon')
-              .Usuario('postgres')
-              .Senha('1234')
-              .Porta(5432)
-              .Hostname('localhost');
+  lConfigBanco.DriverName(PostgreSQL).Database('TesteCon').Usuario('postgres')
+    .Senha('1234').Porta(5432).Hostname('localhost');
 
-   SHOWMESSAGE(TControllerFactoryQuery
-              .New
-              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
-              .SQL('SELECT "Nome" FROM public."Usuario" WHERE "ID"=1')
-              .DataSet
-              .FieldByName('Nome').AsString);
+  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDados.Campos('Usuario')[0]);
 end;
 
 procedure TFormPrincipal.Button2Click(Sender: TObject);
 var
-lConfigBanco: iConfiguracaoBancoDados;
+  lConfigBanco: iConfiguracaoBancoDados;
 begin
   lConfigBanco := TConfiguracaoBancoDados.New;
-  lConfigBanco.DriverName('FB')
-              .Database('E:\Sparta\Dados\Galvao2.0.FDB')
-              .Usuario('SYSDBA')
-              .Senha('masterkey');
+  lConfigBanco.DriverName(Firebird).Database('E:\Sparta\Dados\Galvao2.0.FDB')
+    .Usuario('SYSDBA').Senha('masterkey');
 
-   SHOWMESSAGE(TControllerFactoryQuery
-              .New
-              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
-              .SQL('SELECT CLI_NOME FROM CLIENTE WHERE CLI_CODIGO=2')
-              .DataSet
-              .FieldByName('CLI_NOME').AsString);
+  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDados.Campos('ATALHO')[0]);
 end;
 
 procedure TFormPrincipal.Button3Click(Sender: TObject);
 var
-lConfigBanco: iConfiguracaoBancoDados;
+  lConfigBanco: iConfiguracaoBancoDados;
 begin
   lConfigBanco := TConfiguracaoBancoDados.New;
-  lConfigBanco.DriverName('MySQL')
-              .Database('testemysql')
-              .Usuario('root')
-              .Senha('1234')
-              .Hostname('localhost');
+  lConfigBanco.DriverName(MySQL).Database('testemysql').Usuario('root')
+    .Senha('1234').Hostname('localhost');
 
-   SHOWMESSAGE(TControllerFactoryQuery
-              .New
-              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
-              .SQL('SELECT NOME FROM USUARIOS WHERE ID=1')
-              .DataSet
-              .FieldByName('NOME').AsString);
+  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDados.Campos('usuarios')[0]);
 end;
 
 procedure TFormPrincipal.Button4Click(Sender: TObject);
 var
-lConfigBanco: iConfiguracaoBancoDados;
+  lConfigBanco: iConfiguracaoBancoDados;
 begin
   lConfigBanco := TConfiguracaoBancoDados.New;
-  lConfigBanco.DriverName('SQLite')
-              .Database('C:\Users\GabrielDill\Downloads\Tarefas.db')
-              .Usuario('')
-              .Senha('');
+  lConfigBanco.DriverName(SQLite)
+    .Database('C:\Users\GabrielDill\Downloads\Tarefas.db').Usuario('')
+    .Senha('');
 
-   SHOWMESSAGE(TControllerFactoryQuery
-              .New
-              .Query(TControllerConexaoFactory.New.FireDAC(lConfigBanco))
-              .SQL('SELECT NOME FROM USUARIOS WHERE ID=1')
-              .DataSet
-              .FieldByName('NOME').AsString);
+  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDados.Campos('Tarefas')[0]);
 end;
 
 end.

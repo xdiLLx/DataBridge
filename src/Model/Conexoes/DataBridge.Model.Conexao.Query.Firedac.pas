@@ -46,7 +46,9 @@ end;
 
 function TModelQueryFiredac.IdentificarSelect: Boolean;
 begin
-  Result := Pos('SELECT', Trim(UpperCase(FQuery.SQL.Text))) = 1;
+  Result := False;
+  if (Pos('SELECT', Trim(UpperCase(FQuery.SQL.Text))) = 1) or (Pos('PRAGMA', Trim(UpperCase(FQuery.SQL.Text))) = 1) then
+    Result := True;
 end;
 
 function TModelQueryFiredac.DataSet: TDataSet;
