@@ -6,13 +6,25 @@ uses
   DataBridge.Model.Conexao.Interfaces,
   Data.DB, System.Generics.Collections;
 
- type
- iControllerDatabase = interface
-   ['{95DE3FF7-46F2-465B-9651-031E2585AE85}']
-   function Tabelas : TList<String>;
-   function Campos(aNomeTabela:string): TList<String>;
-   function Query: iQuery;
- end;
+type
+
+  TCallBack = procedure(Sender: TObject);
+
+  iControllerDatabase = interface
+    ['{95DE3FF7-46F2-465B-9651-031E2585AE85}']
+    function Tabelas: TList<String>;
+    function Campos(aNomeTabela: string): TList<String>;
+    function Query: iQuery;
+    function SelecionarTabela(aNomeTabela: string): iControllerDatabase;
+    function TabelaSelecionada: string;
+  end;
+
+  iControllerBridge = interface
+    ['{05E87E62-63E4-4FAD-80CA-CB7E7D236F21}']
+    function MapearCampo(CampoEntrada, CampoSaida: string): iControllerBridge;
+    function Transferir(Const aCallBack: TCallBack = nil): iControllerBridge;
+  end;
 
 implementation
+
 end.

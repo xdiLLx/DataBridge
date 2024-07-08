@@ -12,7 +12,8 @@ uses
   DataBridge.Controller.Interfaces in 'src\Controller\DataBridge.Controller.Interfaces.pas',
   DataBridge.Controller.Factory.Interfaces in 'src\Controller\Factory\DataBridge.Controller.Factory.Interfaces.pas',
   DataBridge.Controller.Factory.Query in 'src\Controller\Factory\DataBridge.Controller.Factory.Query.pas',
-  DataBridge.Controller.Database in 'src\Controller\DataBridge.Controller.Database.pas';
+  DataBridge.Controller.Database in 'src\Controller\DataBridge.Controller.Database.pas',
+  DataBridge.Controller.Bridge in 'src\Controller\DataBridge.Controller.Bridge.pas';
 
 {$R *.res}
 

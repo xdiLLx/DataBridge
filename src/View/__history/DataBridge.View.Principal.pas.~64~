@@ -1,0 +1,103 @@
+unit DataBridge.View.Principal;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Interfaces,
+  DataBridge.Model.Conexao.Configuracao, DataBridge.Controller.Database,
+  DataBridge.Controller.Bridge;
+
+type
+  TFormPrincipal = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+  private
+    { Private declarations }
+    FBancoDeDadosInput: iControllerDatabase;
+    FBancoDeDadosOutput: iControllerDatabase;
+    FBridge: iControllerBridge;
+  public
+    { Public declarations }
+  end;
+
+var
+  FormPrincipal: TFormPrincipal;
+
+implementation
+
+uses
+  DataBridge.Model.Conexao.Interfaces;
+
+{$R *.fmx}
+
+procedure TFormPrincipal.Button1Click(Sender: TObject);
+var
+  lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName(PostgreSQL).Database('TesteCon').Usuario('postgres')
+    .Senha('1234').Porta(5432).Hostname('localhost');
+
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('Usuario')[0]);
+end;
+
+procedure TFormPrincipal.Button2Click(Sender: TObject);
+var
+  lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName(Firebird).Database('E:\Sparta\Dados\Galvao2.0.FDB')
+    .Usuario('SYSDBA').Senha('masterkey');
+
+  FBancoDeDadosOutput := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDadosOutput.Campos('ATALHO')[0]);
+end;
+
+procedure TFormPrincipal.Button3Click(Sender: TObject);
+var
+  lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName(MySQL).Database('testemysql').Usuario('root')
+    .Senha('1234').Hostname('localhost');
+
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('usuarios')[0]);
+end;
+
+procedure TFormPrincipal.Button4Click(Sender: TObject);
+var
+  lConfigBanco: iConfiguracaoBancoDados;
+begin
+  lConfigBanco := TConfiguracaoBancoDados.New;
+  lConfigBanco.DriverName(SQLite)
+    .Database('C:\Users\GabrielDill\Downloads\Tarefas.db').Usuario('')
+    .Senha('');
+
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
+
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('Tarefas')[0]);
+end;
+
+procedure TFormPrincipal.Button5Click(Sender: TObject);
+begin
+  FBridge := tcontrollerbridge.New(FBancoDeDadosInput,FBancoDeDadosOutput);
+end;
+
+end.

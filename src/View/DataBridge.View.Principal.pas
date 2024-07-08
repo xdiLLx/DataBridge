@@ -7,7 +7,8 @@ uses
   System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, DataBridge.Controller.Interfaces,
-  DataBridge.Model.Conexao.Configuracao, DataBridge.Controller.Database;
+  DataBridge.Model.Conexao.Configuracao, DataBridge.Controller.Database,
+  DataBridge.Controller.Bridge;
 
 type
   TFormPrincipal = class(TForm)
@@ -15,14 +16,18 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    Button5: TButton;
 
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
-    FBancoDeDados: iControllerDatabase;
+    FBancoDeDadosInput: iControllerDatabase;
+    FBancoDeDadosOutput: iControllerDatabase;
+    FBridge: iControllerBridge;
   public
     { Public declarations }
   end;
@@ -45,9 +50,9 @@ begin
   lConfigBanco.DriverName(PostgreSQL).Database('TesteCon').Usuario('postgres')
     .Senha('1234').Porta(5432).Hostname('localhost');
 
-  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
 
-  SHOWMESSAGE(FBancoDeDados.Campos('Usuario')[0]);
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('Usuario')[0]);
 end;
 
 procedure TFormPrincipal.Button2Click(Sender: TObject);
@@ -58,9 +63,9 @@ begin
   lConfigBanco.DriverName(Firebird).Database('E:\Sparta\Dados\Galvao2.0.FDB')
     .Usuario('SYSDBA').Senha('masterkey');
 
-  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
-
-  SHOWMESSAGE(FBancoDeDados.Campos('ATALHO')[0]);
+  FBancoDeDadosOutput := TControllerDatabase.New(lConfigBanco);
+  FBancoDeDadosOutput.SelecionarTabela('USUARIO');
+  SHOWMESSAGE(FBancoDeDadosOutput.Campos('ATALHO')[0]);
 end;
 
 procedure TFormPrincipal.Button3Click(Sender: TObject);
@@ -71,9 +76,9 @@ begin
   lConfigBanco.DriverName(MySQL).Database('testemysql').Usuario('root')
     .Senha('1234').Hostname('localhost');
 
-  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
 
-  SHOWMESSAGE(FBancoDeDados.Campos('usuarios')[0]);
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('usuarios')[0]);
 end;
 
 procedure TFormPrincipal.Button4Click(Sender: TObject);
@@ -85,9 +90,20 @@ begin
     .Database('C:\Users\GabrielDill\Downloads\Tarefas.db').Usuario('')
     .Senha('');
 
-  FBancoDeDados := TControllerDatabase.New(lConfigBanco);
+  FBancoDeDadosInput := TControllerDatabase.New(lConfigBanco);
+  FBancoDeDadosInput.SelecionarTabela('Usuarios');
+  SHOWMESSAGE(FBancoDeDadosInput.Campos('Tarefas')[0]);
+end;
 
-  SHOWMESSAGE(FBancoDeDados.Campos('Tarefas')[0]);
+procedure TFormPrincipal.Button5Click(Sender: TObject);
+begin
+  FBridge := tcontrollerbridge.New(FBancoDeDadosInput,FBancoDeDadosOutput);
+  FBridge
+        .MapearCampo('Nome','USU_NOME')
+        .MapearCampo('Login','USU_LOGIN')
+        .MapearCampo('Senha','USU_SENHA')
+        .MapearCampo('ID','USU_CODIGO')
+        .Transferir();
 end;
 
 end.

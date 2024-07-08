@@ -200,6 +200,7 @@
         <DCCReference Include="src\Controller\Factory\DataBridge.Controller.Factory.Interfaces.pas"/>
         <DCCReference Include="src\Controller\Factory\DataBridge.Controller.Factory.Query.pas"/>
         <DCCReference Include="src\Controller\DataBridge.Controller.Database.pas"/>
+        <DCCReference Include="src\Controller\DataBridge.Controller.Bridge.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

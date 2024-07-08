@@ -1,0 +1,105 @@
+unit DataBridge.Controller.Bridge;
+
+interface
+
+uses
+  DataBridge.Controller.Interfaces,
+  System.Generics.Collections, System.SysUtils;
+
+type
+  TControllerBridge = class(TInterfacedObject, iControllerBridge)
+  strict private
+
+  private
+    FCampoMapeadoInput: Tlist<string>;
+    FCampoMapeadoOutput: Tlist<string>;
+    FBancoInput: iControllerDatabase;
+    FBancoOutput: iControllerDatabase;
+    FCallback: TCallBack;
+
+    { Campos privados }
+    function MapearCampo(CampoEntrada, CampoSaida: string): iControllerBridge;
+    function Transferir(Const aCallBack: TCallBack = nil): iControllerBridge;
+  public
+    constructor Create(BancoInput, BancoOutput: iControllerDatabase);
+    destructor Destroy; override;
+    class function New(BancoInput, BancoOutput: iControllerDatabase)
+      : iControllerBridge;
+  end;
+
+implementation
+
+{ TControllerBridge }
+
+constructor TControllerBridge.Create(BancoInput, BancoOutput
+  : iControllerDatabase);
+begin
+  FCampoMapeadoInput := Tlist<string>.Create;
+  FCampoMapeadoOutput := Tlist<string>.Create;
+  FBancoInput := BancoInput;
+  FBancoOutput := BancoOutput;
+end;
+
+destructor TControllerBridge.Destroy;
+begin
+  FCampoMapeadoInput.Free;
+  FCampoMapeadoOutput.Free;
+  inherited;
+end;
+
+function TControllerBridge.MapearCampo(CampoEntrada, CampoSaida: string)
+  : iControllerBridge;
+begin
+  if (CampoEntrada = '') and (CampoSaida = '') then
+    raise Exception.Create
+      ('Os campos de entrada e saida não podem ser mapeados se estiverem em branco');
+
+  FCampoMapeadoInput.Add(CampoEntrada);
+  FCampoMapeadoOutput.Add(CampoSaida);
+
+  Result := Self;
+end;
+
+class function TControllerBridge.New(BancoInput, BancoOutput
+  : iControllerDatabase): iControllerBridge;
+begin
+  if BancoInput.TabelaSelecionada = '' then
+    raise Exception.Create
+      ('Banco de entrada não possui uma tabela selecionada');
+
+  if BancoOutput.TabelaSelecionada = '' then
+    raise Exception.Create('Banco de saída não possui uma tabela selecionada');
+
+  Result := Self.Create(BancoInput, BancoOutput);
+end;
+
+function TControllerBridge.Transferir(const aCallBack: TCallBack)
+  : iControllerBridge;
+begin
+  Result := Self;
+  FBancoInput.Query.SQL('select * from ' + FBancoInput.TabelaSelecionada);
+  FBancoOutput.Query.SQL('select * from ' + FBancoOutput.TabelaSelecionada + 'where 1=2');
+
+  FBancoInput.Query.DataSet.First;
+  while not FBancoInput.Query.DataSet.Eof do
+  begin
+
+    FBancoOutput.Query.DataSet.Insert;
+    for var I := 0 to FCampoMapeadoOutput.Count - 1 do
+    begin
+      FBancoOutput.Query.DataSet[FCampoMapeadoOutput[I]] := FBancoInput.Query.DataSet[FCampoMapeadoInput[I]];
+    end;
+    FBancoOutput.Query.DataSet.Post;
+
+    FBancoInput.Query.DataSet.Next;
+  end;
+
+  if Assigned(aCallBack) then
+  begin
+    FCallback := aCallBack;
+    FCallback(nil);
+  end;
+
+end;
+
+end.

@@ -48,4 +48,14 @@ object FormPrincipal: TFormPrincipal
     Text = 'Testar SQLIte'
     OnClick = Button4Click
   end
+  object Button5: TButton
+    Position.X = 360.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 249.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Transferir Usuario  Teste'
+    OnClick = Button5Click
+  end
 end

@@ -19,9 +19,12 @@ type
     FConexao: iConexao;
     FTabelas: TList<string>;
     FCampos: TList<string>;
+    FTabelaSelecionada: string;
 
     function Query: iQuery;
     function Tabelas: TList<String>;
+    function SelecionarTabela(aNomeTabela: string):iControllerDatabase;
+    function TabelaSelecionada:string;
     function Campos(aNomeTabela:string): TList<String>;
 
   public
@@ -84,6 +87,12 @@ begin
   Result := FQuery;
 end;
 
+function TControllerDatabase.SelecionarTabela(
+  aNomeTabela: string): iControllerDatabase;
+begin
+  FTabelaSelecionada := aNomeTabela;
+end;
+
 function TControllerDatabase.Tabelas: TList<String>;
 begin
   if FTabelas.Count > 0 then
@@ -108,6 +117,11 @@ begin
 
   Result := FTabelas;
 
+end;
+
+function TControllerDatabase.TabelaSelecionada: string;
+begin
+  Result := FTabelaSelecionada;
 end;
 
 end.
